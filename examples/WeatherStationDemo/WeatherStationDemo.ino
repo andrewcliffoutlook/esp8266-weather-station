@@ -39,6 +39,7 @@ See more at https://thingpulse.com
 #include <sys/time.h>                   // struct timeval
 
 #include "SSD1306Wire.h"
+#include "SH1106Wire.h"
 #include "OLEDDisplayUi.h"
 #include "Wire.h"
 #include "OpenWeatherMapCurrent.h"
@@ -52,37 +53,38 @@ See more at https://thingpulse.com
  **************************/
 
 // WIFI
-const char* WIFI_SSID = "yourssid";
-const char* WIFI_PWD = "yourpassw0rd";
+const char* WIFI_SSID = "Cliffs_Nest";
+const char* WIFI_PWD = "SOUPS-sift-mid";
 
-#define TZ              2       // (utc+) TZ in hours
+#define TZ              0       // (utc+) TZ in hours
 #define DST_MN          60      // use 60mn for summer time in some countries
 
 // Setup
 const int UPDATE_INTERVAL_SECS = 20 * 60; // Update every 20 minutes
 
 // Display Settings
-const int I2C_DISPLAY_ADDRESS = 0x3c;
+const int I2C_DISPLAY_ADDRESS = 0x3C;
 #if defined(ESP8266)
-const int SDA_PIN = D3;
-const int SDC_PIN = D4;
-#else
-const int SDA_PIN = 5; //D3;
-const int SDC_PIN = 4; //D4;
+const int SDA_PIN = D2;
+const int SDC_PIN = D1;
+//boolean INVERT_DISPLAY = false; // true = pins at top | false = pins at the bottom
+//#else
+//const int SDA_PIN = 5; //D3;
+//const int SDC_PIN = 4; //D4;
 #endif
 
 
 // OpenWeatherMap Settings
 // Sign up here to get an API key:
 // https://docs.thingpulse.com/how-tos/openweathermap-key/
-String OPEN_WEATHER_MAP_APP_ID = "XXX";
+String OPEN_WEATHER_MAP_APP_ID = "8dc6796cd1696bed363641b4da6efcb2";
 /*
 Go to https://openweathermap.org/find?q= and search for a location. Go through the
 result set and select the entry closest to the actual location you want to display 
 data for. It'll be a URL like https://openweathermap.org/city/2657896. The number
 at the end is what you assign to the constant below.
  */
-String OPEN_WEATHER_MAP_LOCATION_ID = "2657896";
+String OPEN_WEATHER_MAP_LOCATION_ID = "6693242";
 
 // Pick a language code from this list:
 // Arabic - ar, Bulgarian - bg, Catalan - ca, Czech - cz, German - de, Greek - el,
@@ -92,7 +94,7 @@ String OPEN_WEATHER_MAP_LOCATION_ID = "2657896";
 // Portuguese - pt, Romanian - ro, Russian - ru, Swedish - se, Slovak - sk,
 // Slovenian - sl, Spanish - es, Turkish - tr, Ukrainian - ua, Vietnamese - vi,
 // Chinese Simplified - zh_cn, Chinese Traditional - zh_tw.
-String OPEN_WEATHER_MAP_LANGUAGE = "de";
+String OPEN_WEATHER_MAP_LANGUAGE = "en";
 const uint8_t MAX_FORECASTS = 4;
 
 const boolean IS_METRIC = true;
@@ -106,7 +108,7 @@ const String MONTH_NAMES[] = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "
  **************************/
  // Initialize the oled display for address 0x3c
  // sda-pin=14 and sdc-pin=12
- SSD1306Wire     display(I2C_DISPLAY_ADDRESS, SDA_PIN, SDC_PIN);
+ SH1106Wire     display(I2C_DISPLAY_ADDRESS, SDA_PIN, SDC_PIN);
  OLEDDisplayUi   ui( &display );
 
 OpenWeatherMapCurrentData currentWeather;
@@ -152,12 +154,12 @@ void setup() {
   Serial.println();
   Serial.println();
 
-  // initialize dispaly
+  // initialize display
   display.init();
+  display.flipScreenVertically();
   display.clear();
   display.display();
 
-  //display.flipScreenVertically();
   display.setFont(ArialMT_Plain_10);
   display.setTextAlignment(TEXT_ALIGN_CENTER);
   display.setContrast(255);
@@ -234,6 +236,7 @@ void loop() {
 
 void drawProgress(OLEDDisplay *display, int percentage, String label) {
   display->clear();
+  display->flipScreenVertically();
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
   display->drawString(64, 10, label);
