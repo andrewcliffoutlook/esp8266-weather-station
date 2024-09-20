@@ -37,7 +37,7 @@ See more at https://thingpulse.com
 // time
 #include <time.h>                       // time() ctime()
 #include <sys/time.h>                   // struct timeval
-
+#include "Settings.h"
 #include "SSD1306Wire.h"
 #include "SH1106Wire.h"
 #include "OLEDDisplayUi.h"
@@ -55,6 +55,9 @@ See more at https://thingpulse.com
 // WIFI
 const char* WIFI_SSID = "XXXX";
 const char* WIFI_PWD = "XXXX";
+
+#define HOSTNAME "Weather-" 
+#define CONFIG "/conf.txt"
 
 #define TZ              0       // (utc+) TZ in hours
 #define DST_MN          60      // use 60mn for summer time in some countries
@@ -164,7 +167,24 @@ void setup() {
   display.setTextAlignment(TEXT_ALIGN_CENTER);
   display.setContrast(255);
 
-  WiFi.begin(WIFI_SSID, WIFI_PWD);
+  //WiFiManager
+  //Local intialization. Once its business is done, there is no need to keep it around
+  WiFiManager wifiManager;
+  
+  // Uncomment for testing wifi manager
+  //wifiManager.resetSettings();
+  wifiManager.setAPCallback(configModeCallback);
+  
+  String hostname(HOSTNAME);
+  hostname += String(ESP.getChipId(), HEX);
+  if (!wifiManager.autoConnect((const char *)hostname.c_str())) {// new addition
+    delay(3000);
+    WiFi.disconnect(true);
+    ESP.reset();
+    delay(5000);
+  }
+
+  //WiFi.begin(WIFI_SSID, WIFI_PWD);
 
   int counter = 0;
   while (WiFi.status() != WL_CONNECTED) {
