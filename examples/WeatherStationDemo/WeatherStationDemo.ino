@@ -383,5 +383,5 @@ void configModeCallback (WiFiManager *myWiFiManager) {
   Serial.println("Please connect to AP");
   Serial.println(myWiFiManager->getConfigPortalSSID());
   Serial.println("To setup Wifi Configuration");
-  flashLED(20, 50);
+  //flashLED(20, 50);
 }
