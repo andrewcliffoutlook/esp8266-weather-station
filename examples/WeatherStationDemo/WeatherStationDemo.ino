@@ -548,6 +548,47 @@ void configModeCallback (WiFiManager *myWiFiManager) {
   //flashLED(20, 50);
 }
 
+void displayStatus() {
+
+  String html = "";
+
+  server.sendHeader("Cache-Control", "no-cache, no-store");
+  server.sendHeader("Pragma", "no-cache");
+  server.sendHeader("Expires", "-1");
+  server.setContentLength(CONTENT_LENGTH_UNKNOWN);
+  server.send(200, "text/html", "");
+  server.sendContent(String(getHeader(true)));
+
+  
+ 
+    if (currentWeatherClient.getCity(0) == "") {
+      html += "<p>Please <a href='/configureweather'>Configure Weather</a> API</p>";
+      if (currentWeatherClient.getError() != "") {
+        html += "<p>Weather Error: <strong>" + currentWeatherClient.getError() + "</strong></p>";
+      }
+    } else {
+      html += "<div class='w3-cell-row' style='width:100%'><h2>" + currentWeatherClient.getCity(0) + ", " + currentWeatherClient.getCountry(0) + "</h2></div><div class='w3-cell-row'>";
+      html += "<div class='w3-cell w3-left w3-medium' style='width:120px'>";
+      html += "<img src='http://openweathermap.org/img/w/" + currentWeatherClient.getIcon(0) + ".png' alt='" + currentWeatherClient.getDescription(0) + "'><br>";
+      html += currentWeatherClient.getHumidity(0) + "% Humidity<br>";
+      html += currentWeatherClient.getWind(0) + " <span class='w3-tiny'>" + getSpeedSymbol() + "</span> Wind<br>";
+      html += "</div>";
+      html += "<div class='w3-cell w3-container' style='width:100%'><p>";
+      html += currentWeatherClient.getCondition(0) + " (" + currentWeatherClient.getDescription(0) + ")<br>";
+      html += weatherClient.getTempRounded(0) + getTempSymbol(true) + "<br>";
+      html += "<a href='https://www.google.com/maps/@" + currentWeatherClient.getLat(0) + "," + currentWeatherClient.getLon(0) + ",10000m/data=!3m1!1e3' target='_BLANK'><i class='fa fa-map-marker' style='color:red'></i> Map It!</a><br>";
+      html += "</p></div></div>";
+    }
+    
+    server.sendContent(html); // spit out what we got
+    html = ""; // fresh start
+ 
+
+  server.sendContent(String(getFooter()));
+  server.sendContent("");
+  server.client().stop();
+}
+
 boolean authentication() {
   if (IS_BASIC_AUTH && (strlen(www_username) >= 1 && strlen(www_password) >= 1)) {
     return server.authenticate(www_username, www_password);
@@ -863,4 +904,36 @@ void readSettings() {
   OPEN_WEATHER_MAP_APP_ID = WeatherApiKey;
   OPEN_WEATHER_MAP_LANGUAGE = WeatherLanguage;
   OPEN_WEATHER_MAP_LOCATION_ID = CityIDs[0];
+}
+String getTempSymbol() {
+  return getTempSymbol(false);
+}
+
+String getTempSymbol(boolean forHTML) {
+  String rtnValue = "F";
+  if (IS_METRIC) {
+    rtnValue = "C";
+  }
+  if (forHTML) {
+    rtnValue = "&#176;" + rtnValue;
+  } else {
+    rtnValue = "°" + rtnValue;
+  }
+  return rtnValue;
+}
+
+String getSpeedSymbol() {
+  String rtnValue = "mph";
+  if (IS_METRIC) {
+    rtnValue = "kph";
+  }
+  return rtnValue;
+}
+
+String zeroPad(int value) {
+  String rtnValue = String(value);
+  if (value < 10) {
+    rtnValue = "0" + rtnValue;
+  }
+  return rtnValue;
 }
