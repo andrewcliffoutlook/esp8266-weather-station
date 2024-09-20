@@ -363,3 +363,25 @@ void setReadyForWeatherUpdate() {
   Serial.println("Setting readyForUpdate to true");
   readyForWeatherUpdate = true;
 }
+
+void configModeCallback (WiFiManager *myWiFiManager) {
+  Serial.println("Entered config mode");
+  Serial.println(WiFi.softAPIP());
+
+  display.clear();
+  display.setTextAlignment(TEXT_ALIGN_CENTER);
+  display.setFont(ArialMT_Plain_10);
+  display.drawString(64, 0, "Wifi Manager");
+  display.drawString(64, 10, "Please connect to AP");
+  display.setFont(ArialMT_Plain_16);
+  display.drawString(64, 26, myWiFiManager->getConfigPortalSSID());
+  display.setFont(ArialMT_Plain_10);
+  display.drawString(64, 46, "To setup Wifi connection");
+  display.display();
+  
+  Serial.println("Wifi Manager");
+  Serial.println("Please connect to AP");
+  Serial.println(myWiFiManager->getConfigPortalSSID());
+  Serial.println("To setup Wifi Configuration");
+  flashLED(20, 50);
+}
