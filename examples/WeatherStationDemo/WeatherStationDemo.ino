@@ -152,6 +152,13 @@ int numberOfFrames = 3;
 OverlayCallback overlays[] = { drawHeaderOverlay };
 int numberOfOverlays = 1;
 
+//declairing prototypes
+void configModeCallback (WiFiManager *myWiFiManager);
+int8_t getWifiQuality();
+
+ESP8266WebServer server(WEBSERVER_PORT);
+ESP8266HTTPUpdateServer serverUpdater;
+
 static const char WEB_ACTIONS[] PROGMEM =  "<a class='w3-bar-item w3-button' href='/'><i class='fa fa-home'></i> Home</a>"
                       "<a class='w3-bar-item w3-button' href='/configure'><i class='fa fa-cog'></i> Configure</a>"
                       "<a class='w3-bar-item w3-button' href='/configureweather'><i class='fa fa-cloud'></i> Weather</a>"
