@@ -26,7 +26,12 @@ char* www_username = "admin";  // User account for the Web Interface
 char* www_password = "password";  // Password for the Web Interface
 
 
+int minutesBetweenDataRefresh = 15;
+boolean INVERT_DISPLAY = false; // true = pins at top | false = pins at the bottom
 
+// OTA Updates
+boolean ENABLE_OTA = true;     // this will allow you to load firmware to the device over WiFi (see OTA for ESP8266)
+String OTA_Password = "";      // Set an OTA password here -- leave blank if you don't want to be prompted for password
 
 //******************************
 // End Settings
