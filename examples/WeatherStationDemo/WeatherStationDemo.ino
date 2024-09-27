@@ -811,7 +811,7 @@ String getHeader(boolean refresh) {
 }
 
 String getFooter() {
-  int8_t rssi = Wifi.RSSI();
+  int8_t rssi = WiFi.RSSI();
   Serial.print("Signal Strength (RSSI): ");
   Serial.print(rssi);
   Serial.println("%");
