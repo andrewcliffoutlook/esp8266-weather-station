@@ -24,13 +24,13 @@ See more at https://thingpulse.com
 */
 
 #include <Arduino.h>
-#define ESP8266
-#if defined(ESP8266)
+//#define ESP8266
+//#if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #include <coredecls.h>                  // settimeofday_cb()
-#else
-#include <WiFi.h>
-#endif
+//#else
+//#include <WiFi.h>
+//#endif
 #include <ESPHTTPClient.h>
 #include <JsonListener.h>
 
