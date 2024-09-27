@@ -120,6 +120,9 @@ OpenWeatherMapCurrent currentWeatherClient;
 OpenWeatherMapForecastData forecasts[MAX_FORECASTS];
 OpenWeatherMapForecast forecastClient;
 
+// Weather Client
+OpenWeatherMapClient weatherClient(WeatherApiKey, CityIDs, 1, IS_METRIC, WeatherLanguage);
+
 #define TZ_MN           ((TZ)*60)
 #define TZ_SEC          ((TZ)*3600)
 #define DST_SEC         ((DST_MN)*60)
@@ -561,22 +564,22 @@ void displayStatus() {
 
   
  
-    if (currentWeatherClient.getCity(0) == "") {
+    if (weatherClient.getCity(0) == "") {
       html += "<p>Please <a href='/configureweather'>Configure Weather</a> API</p>";
-      if (currentWeatherClient.getError() != "") {
-        html += "<p>Weather Error: <strong>" + currentWeatherClient.getError() + "</strong></p>";
+      if (weatherClient.getError() != "") {
+        html += "<p>Weather Error: <strong>" + weatherClient.getError() + "</strong></p>";
       }
     } else {
-      html += "<div class='w3-cell-row' style='width:100%'><h2>" + currentWeatherClient.getCity(0) + ", " + currentWeatherClient.getCountry(0) + "</h2></div><div class='w3-cell-row'>";
+      html += "<div class='w3-cell-row' style='width:100%'><h2>" + weatherClient.getCity(0) + ", " + weatherClient.getCountry(0) + "</h2></div><div class='w3-cell-row'>";
       html += "<div class='w3-cell w3-left w3-medium' style='width:120px'>";
-      html += "<img src='http://openweathermap.org/img/w/" + currentWeatherClient.getIcon(0) + ".png' alt='" + currentWeatherClient.getDescription(0) + "'><br>";
-      html += currentWeatherClient.getHumidity(0) + "% Humidity<br>";
-      html += currentWeatherClient.getWind(0) + " <span class='w3-tiny'>" + getSpeedSymbol() + "</span> Wind<br>";
+      html += "<img src='http://openweathermap.org/img/w/" + weatherClient.getIcon(0) + ".png' alt='" + weatherClient.getDescription(0) + "'><br>";
+      html += weatherClient.getHumidity(0) + "% Humidity<br>";
+      html += weatherClient.getWind(0) + " <span class='w3-tiny'>" + getSpeedSymbol() + "</span> Wind<br>";
       html += "</div>";
       html += "<div class='w3-cell w3-container' style='width:100%'><p>";
-      html += currentWeatherClient.getCondition(0) + " (" + currentWeatherClient.getDescription(0) + ")<br>";
+      html += weatherClient.getCondition(0) + " (" + weatherClient.getDescription(0) + ")<br>";
       html += weatherClient.getTempRounded(0) + getTempSymbol(true) + "<br>";
-      html += "<a href='https://www.google.com/maps/@" + currentWeatherClient.getLat(0) + "," + currentWeatherClient.getLon(0) + ",10000m/data=!3m1!1e3' target='_BLANK'><i class='fa fa-map-marker' style='color:red'></i> Map It!</a><br>";
+      html += "<a href='https://www.google.com/maps/@" + weatherClient.getLat(0) + "," + weatherClient.getLon(0) + ",10000m/data=!3m1!1e3' target='_BLANK'><i class='fa fa-map-marker' style='color:red'></i> Map It!</a><br>";
       html += "</p></div></div>";
     }
     
@@ -616,6 +619,11 @@ void handleUpdateWeather() {
   CityIDs[0] = server.arg("city1").toInt();
   IS_METRIC = server.hasArg("metric");
   WeatherLanguage = server.arg("language");
+  //Updating for Display
+  OPEN_WEATHER_MAP_APP_ID = WeatherApiKey;
+  OPEN_WEATHER_MAP_LOCATION_ID = CityIDs[0];
+  OPEN_WEATHER_MAP_LANGUAGE = WeatherLanguage;
+ 
   writeSettings();
   redirectHome();
 }

@@ -4,6 +4,7 @@
 #include <ArduinoOTA.h>
 #include <ESP8266HTTPUpdateServer.h>
 #include "FS.h"
+#include "OpenWeatherMapClient.h"
 
 
 //******************************
