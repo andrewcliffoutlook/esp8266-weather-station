@@ -100,7 +100,7 @@ String OPEN_WEATHER_MAP_LOCATION_ID = "6693242";
 String OPEN_WEATHER_MAP_LANGUAGE = "en";
 const uint8_t MAX_FORECASTS = 4;
 
-const boolean IS_METRIC = true;
+boolean IS_METRIC = true;
 
 // Adjust according to your language
 const String WDAY_NAMES[] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
