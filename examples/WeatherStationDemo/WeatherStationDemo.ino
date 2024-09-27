@@ -713,6 +713,10 @@ void handleConfigure() {
 
   CHANGE_FORM = "<form class='w3-container' action='/updateconfig' method='get'><h2>Weather Station Config:</h2>";
 
+  String form = CHANGE_FORM;
+  
+  server.sendContent(form);
+
   form = FPSTR(CLOCK_FORM);
   
   String isInvDisp = "";
