@@ -24,7 +24,7 @@ See more at https://thingpulse.com
 */
 
 #include <Arduino.h>
-//#define ESP8266
+#define ESP8266
 //#if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #include <coredecls.h>                  // settimeofday_cb()
@@ -811,7 +811,7 @@ String getHeader(boolean refresh) {
 }
 
 String getFooter() {
-  int8_t rssi = getWifiQuality();
+  int8_t rssi = Wifi.RSSI();
   Serial.print("Signal Strength (RSSI): ");
   Serial.print(rssi);
   Serial.println("%");
@@ -819,7 +819,7 @@ String getFooter() {
   html += "</div>";
   html += "<footer class='w3-container w3-bottom w3-theme w3-margin-top'>";
     html += "<i class='fa fa-rss'></i> Signal Strength: ";
-  html += String(rssi) + "%";
+  html += String(rssi) + "db";
   html += "</footer>";
   html += "</body></html>";
   return html;
