@@ -709,7 +709,7 @@ void handleConfigure() {
   html = getHeader();
   server.sendContent(html);
 
-  CHANGE_FORM =       "<form class='w3-container' action='/updateconfig' method='get'><h2>Weather Station Config:</h2>"
+  CHANGE_FORM = "<form class='w3-container' action='/updateconfig' method='get'><h2>Weather Station Config:</h2>";
                      
   String isInvDisp = "";
   if (INVERT_DISPLAY) {
