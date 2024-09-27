@@ -27,7 +27,11 @@ char* www_username = "admin";  // User account for the Web Interface
 char* www_password = "password";  // Password for the Web Interface
 
 
+// Date and Time
+float UtcOffset = 0; // Hour offset from GMT for your timezone
+boolean IS_24HOUR = false;     // 23:00 millitary 24 hour clock
 int minutesBetweenDataRefresh = 15;
+boolean DISPLAYCLOCK = true;   // true = Show Clock when not printing / false = turn off display when not printing
 boolean INVERT_DISPLAY = false; // true = pins at top | false = pins at the bottom
 
 // OTA Updates
