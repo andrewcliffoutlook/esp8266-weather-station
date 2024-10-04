@@ -15,7 +15,7 @@
 boolean DISPLAYWEATHER = true; // true = show weather when not printing / false = no weather
 String WeatherApiKey = ""; // Your API Key from http://openweathermap.org/
 // Default City Location (use http://openweathermap.org/find to find city ID)
-int CityIDs[] = { 5304391 }; //Only USE ONE for weather marquee
+int CityIDs[] = { 2643743 }; //Only USE ONE for weather marquee
 // Languages: ar, bg, ca, cz, de, el, en, fa, fi, fr, gl, hr, hu, it, ja, kr, la, lt, mk, nl, pl, pt, ro, ru, se, sk, sl, es, tr, ua, vi, zh_cn, zh_tw
 String WeatherLanguage = "en";  //Default (en) English
 
