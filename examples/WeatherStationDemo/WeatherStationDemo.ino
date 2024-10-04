@@ -628,6 +628,7 @@ void handleUpdateWeather() {
   WeatherLanguage = server.arg("language");
    
   writeSettings();
+  updateData(&display);
   redirectHome();
 }
 
@@ -641,7 +642,9 @@ void handleUpdateConfig() {
   temp.toCharArray(www_username, sizeof(temp));
   temp = server.arg("stationpassword");
   temp.toCharArray(www_password, sizeof(temp));
+  INVERT_DISPLAY = server.hasArg("invDisp");
   writeSettings();
+  updateData(&display);
   redirectHome();
 }
 
