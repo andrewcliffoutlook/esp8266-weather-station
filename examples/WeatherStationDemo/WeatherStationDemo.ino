@@ -252,6 +252,9 @@ static const char COLOR_THEMES[] PROGMEM = "<option>red</option>"
 
 void setup() {
   Serial.begin(115200);
+  SPIFFS.begin();
+  delay(10);
+  
   Serial.println();
   Serial.println();
 
@@ -621,11 +624,7 @@ void handleUpdateWeather() {
   CityIDs[0] = server.arg("city1").toInt();
   IS_METRIC = server.hasArg("metric");
   WeatherLanguage = server.arg("language");
-  //Updating for Display
-  OPEN_WEATHER_MAP_APP_ID = WeatherApiKey;
-  OPEN_WEATHER_MAP_LOCATION_ID = CityIDs[0];
-  OPEN_WEATHER_MAP_LANGUAGE = WeatherLanguage;
- 
+   
   writeSettings();
   redirectHome();
 }
