@@ -389,6 +389,8 @@ if (ENABLE_OTA) {
 
   Serial.println("");
 
+  readSettings();
+  
   updateData(&display);
 
 }
