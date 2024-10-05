@@ -526,8 +526,9 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   display->setTextAlignment(TEXT_ALIGN_LEFT);
   display->drawString(0, 54, String(buff));
   display->setTextAlignment(TEXT_ALIGN_RIGHT);
-  String temp = String(currentWeather.temp, 1) + (IS_METRIC ? "°C" : "°F");
-  display->drawString(128, 54, temp);
+  //String temp = String(currentWeather.temp, 1) + (IS_METRIC ? "°C" : "°F");
+  //display->drawString(128, 54, temp);
+  display->drawString(128, 54, WiFi.localIP().toString());
   display->drawHorizontalLine(0, 52, 128);
 }
 
