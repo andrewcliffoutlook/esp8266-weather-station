@@ -351,6 +351,7 @@ if (ENABLE_OTA) {
     display.drawString(64, 30, WiFi.localIP().toString());
     display.drawString(64, 46, "Port: " + String(WEBSERVER_PORT));
     display.display();
+    delay(3000);
   } else {
     Serial.println("Web Interface is Disabled");
     display.clear();
