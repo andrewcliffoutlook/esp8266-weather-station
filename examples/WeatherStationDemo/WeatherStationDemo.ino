@@ -536,15 +536,13 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
     //  int bars = map(RSSI,-80,-44,1,6); // this method doesn't refelct the Bars well
     // simple if then to set the number of bars
     
-    if (rssi > -55) { 
-      bars = 5;
-    } else if (rssi < -55 & rssi > -65) {
+    if (rssi > -50) { 
       bars = 4;
-    } else if (rssi < -65 & rssi > -70) {
+    } else if (rssi < -50 & rssi > -60) {
       bars = 3;
-    } else if (rssi < -70 & rssi > -78) {
+    } else if (rssi < -60 & rssi > -70) {
       bars = 2;
-    } else if (rssi < -78 & rssi > -82) {
+    } else if (rssi < -70 & rssi > -80) {
       bars = 1;
     } else {
       bars = 0;
@@ -556,7 +554,7 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   // Do some simple loop math to draw rectangles as the bars
   // Draw one bar for each "bar" 
     for (int b=0; b <= bars; b++) {
-      display->fillRect(114 + (b*2),64 - (b*2),2,b*2); 
+      display->fillRect(114 + (b*3),64 - (b*2),2,b*3); 
     }
   
   display->drawHorizontalLine(0, 52, 128);
