@@ -556,7 +556,7 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   // Do some simple loop math to draw rectangles as the bars
   // Draw one bar for each "bar" 
     for (int b=0; b <= bars; b++) {
-      display.fillRect(99 + (b*5),64 - (b*5),3,b*5,WHITE); 
+      display->fillRect(99 + (b*5),64 - (b*5),3,b*5,WHITE); 
     }
   
   display->drawHorizontalLine(0, 52, 128);
