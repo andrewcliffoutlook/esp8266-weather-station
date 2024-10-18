@@ -528,8 +528,37 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   //String temp = String(currentWeather.temp, 1) + (IS_METRIC ? "°C" : "°F");
   //display->drawString(128, 54, temp);
   int8_t rssi = WiFi.RSSI();
-  String rssi_s = String(rssi) + " db";
-  display->drawString(128, 54, rssi_s);
+  //String rssi_s = String(rssi) + " db";
+  //display->drawString(128, 54, rssi_s);
+
+   Serial.print("Signal strength: ");
+    int bars;
+    //  int bars = map(RSSI,-80,-44,1,6); // this method doesn't refelct the Bars well
+    // simple if then to set the number of bars
+    
+    if (rssi > -55) { 
+      bars = 5;
+    } else if (rssi < -55 & rssi > -65) {
+      bars = 4;
+    } else if (rssi < -65 & rssi > -70) {
+      bars = 3;
+    } else if (rssi < -70 & rssi > -78) {
+      bars = 2;
+    } else if (rssi < -78 & rssi > -82) {
+      bars = 1;
+    } else {
+      bars = 0;
+    }
+
+    Serial.print(rssi);
+    Serial.println("dBm");
+
+  // Do some simple loop math to draw rectangles as the bars
+  // Draw one bar for each "bar" 
+    for (int b=0; b <= bars; b++) {
+      display.fillRect(99 + (b*5),64 - (b*5),3,b*5,WHITE); 
+    }
+  
   display->drawHorizontalLine(0, 52, 128);
 }
 
