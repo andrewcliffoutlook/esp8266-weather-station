@@ -533,8 +533,6 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
 
    Serial.print("Signal strength: ");
     int bars;
-    //  int bars = map(RSSI,-80,-44,1,6); // this method doesn't refelct the Bars well
-    // simple if then to set the number of bars
     
     if (rssi > -50) { 
       bars = 4;
