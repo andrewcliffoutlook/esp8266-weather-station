@@ -65,6 +65,10 @@ const char* WIFI_PWD = "XXXX";
 // Setup
 const int UPDATE_INTERVAL_SECS = 20 * 60; // Update every 20 minutes
 
+// Time management variables - SC Addition
+unsigned long previousMillis = 0; // stores the last time RSSI was updated
+const long interval = 60000;       // interval to update RSSI (e.g., every 5000 ms = 5 seconds)
+
 // Display Settings
 const int I2C_DISPLAY_ADDRESS = 0x3C;
 #if defined(ESP8266)
@@ -155,7 +159,7 @@ int numberOfFrames = 3;
 OverlayCallback overlays[] = { drawHeaderOverlay };
 int numberOfOverlays = 1;
 
-//declairing prototypes
+//declaring prototypes
 void configModeCallback (WiFiManager *myWiFiManager);
 int8_t getWifiQuality();
 
@@ -395,7 +399,13 @@ if (ENABLE_OTA) {
 }
 
 void loop() {
+  // SC - Addition
+  unsigned long currentMillis = millis();
 
+  // Check if it's time to update RSSI - SC Addition
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+  }
   if (millis() - timeSinceLastWUpdate > (1000L*UPDATE_INTERVAL_SECS)) {
     setReadyForWeatherUpdate();
     timeSinceLastWUpdate = millis();
@@ -528,8 +538,8 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   //String temp = String(currentWeather.temp, 1) + (IS_METRIC ? "°C" : "°F");
   //display->drawString(128, 54, temp);
   int8_t rssi = WiFi.RSSI();
-  //String rssi_s = String(rssi) + " db";
-  //display->drawString(128, 54, rssi_s);
+  String rssi_s = String(rssi) + " db";
+  display->drawString(115, 54, rssi_s);
 
    Serial.print("Signal strength: ");
     int bars;
