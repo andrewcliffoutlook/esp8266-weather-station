@@ -139,6 +139,7 @@ String lastUpdate = "--";
 
 long timeSinceLastWUpdate = 0;
 bool updateRssi = false;
+int8_t rssi = WiFi.RSSI();
 
 //declaring prototypes
 void drawProgress(OLEDDisplay *display, int percentage, String label);
@@ -545,34 +546,36 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   //display->drawString(128, 54, temp);
   if (updateRssi == true)
   {
-    int8_t rssi = WiFi.RSSI();
+    rssi = WiFi.RSSI();
+    Serial.print("Signal strength: ");
+    Serial.print(rssi);
+    Serial.println("dBm");
+  }
     String rssi_s = String(rssi) + " db";
     display->drawString(115, 54, rssi_s);
+
+    int bars;
+    
+    if (rssi > -50) { 
+      bars = 4;
+    } else if (rssi < -50 & rssi > -60) {
+      bars = 3;
+    } else if (rssi < -60 & rssi > -70) {
+      bars = 2;
+    } else if (rssi < -70 & rssi > -80) {
+      bars = 1;
+    } else {
+      bars = 0;
+    }
+
+
+
+  // Do some simple loop math to draw rectangles as the bars
+  // Draw one bar for each "bar" 
+    for (int b=0; b <= bars; b++) {
+      display->fillRect(114 + (b*3),64 - (b*2),2,b*3); 
+    }
   
-     Serial.print("Signal strength: ");
-      int bars;
-      
-      if (rssi > -50) { 
-        bars = 4;
-      } else if (rssi < -50 & rssi > -60) {
-        bars = 3;
-      } else if (rssi < -60 & rssi > -70) {
-        bars = 2;
-      } else if (rssi < -70 & rssi > -80) {
-        bars = 1;
-      } else {
-        bars = 0;
-      }
-  
-      Serial.print(rssi);
-      Serial.println("dBm");
-  
-    // Do some simple loop math to draw rectangles as the bars
-    // Draw one bar for each "bar" 
-      for (int b=0; b <= bars; b++) {
-        display->fillRect(114 + (b*3),64 - (b*2),2,b*3); 
-      }
-  }
   
   display->drawHorizontalLine(0, 52, 128);
 }
