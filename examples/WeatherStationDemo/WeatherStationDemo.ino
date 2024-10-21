@@ -543,7 +543,7 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   display->setTextAlignment(TEXT_ALIGN_RIGHT);
   //String temp = String(currentWeather.temp, 1) + (IS_METRIC ? "°C" : "°F");
   //display->drawString(128, 54, temp);
-  if updateRssi == true
+  if (updateRssi == true)
   {
     int8_t rssi = WiFi.RSSI();
     String rssi_s = String(rssi) + " db";
