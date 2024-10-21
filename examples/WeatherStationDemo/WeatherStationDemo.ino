@@ -138,6 +138,7 @@ bool readyForWeatherUpdate = false;
 String lastUpdate = "--";
 
 long timeSinceLastWUpdate = 0;
+bool updateRssi = false;
 
 //declaring prototypes
 void drawProgress(OLEDDisplay *display, int percentage, String label);
@@ -405,6 +406,11 @@ void loop() {
   // Check if it's time to update RSSI - SC Addition
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
+    updateRssi = true;
+  }
+  else
+  {
+    updateRssi = false;  
   }
   if (millis() - timeSinceLastWUpdate > (1000L*UPDATE_INTERVAL_SECS)) {
     setReadyForWeatherUpdate();
@@ -537,33 +543,36 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   display->setTextAlignment(TEXT_ALIGN_RIGHT);
   //String temp = String(currentWeather.temp, 1) + (IS_METRIC ? "°C" : "°F");
   //display->drawString(128, 54, temp);
-  int8_t rssi = WiFi.RSSI();
-  String rssi_s = String(rssi) + " db";
-  display->drawString(115, 54, rssi_s);
-
-   Serial.print("Signal strength: ");
-    int bars;
-    
-    if (rssi > -50) { 
-      bars = 4;
-    } else if (rssi < -50 & rssi > -60) {
-      bars = 3;
-    } else if (rssi < -60 & rssi > -70) {
-      bars = 2;
-    } else if (rssi < -70 & rssi > -80) {
-      bars = 1;
-    } else {
-      bars = 0;
-    }
-
-    Serial.print(rssi);
-    Serial.println("dBm");
-
-  // Do some simple loop math to draw rectangles as the bars
-  // Draw one bar for each "bar" 
-    for (int b=0; b <= bars; b++) {
-      display->fillRect(114 + (b*3),64 - (b*2),2,b*3); 
-    }
+  if updateRssi == true
+  {
+    int8_t rssi = WiFi.RSSI();
+    String rssi_s = String(rssi) + " db";
+    display->drawString(115, 54, rssi_s);
+  
+     Serial.print("Signal strength: ");
+      int bars;
+      
+      if (rssi > -50) { 
+        bars = 4;
+      } else if (rssi < -50 & rssi > -60) {
+        bars = 3;
+      } else if (rssi < -60 & rssi > -70) {
+        bars = 2;
+      } else if (rssi < -70 & rssi > -80) {
+        bars = 1;
+      } else {
+        bars = 0;
+      }
+  
+      Serial.print(rssi);
+      Serial.println("dBm");
+  
+    // Do some simple loop math to draw rectangles as the bars
+    // Draw one bar for each "bar" 
+      for (int b=0; b <= bars; b++) {
+        display->fillRect(114 + (b*3),64 - (b*2),2,b*3); 
+      }
+  }
   
   display->drawHorizontalLine(0, 52, 128);
 }
