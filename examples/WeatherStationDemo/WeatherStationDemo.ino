@@ -60,7 +60,7 @@ const char* WIFI_PWD = "XXXX";
 #define CONFIG "/conf.txt"
 
 #define TZ              0       // (utc+) TZ in hours
-#define DST_MN          60      // use 60mn for summer time in some countries
+#define DST_MN          0      // use 60mn for summer time in some countries
 
 // Setup
 const int UPDATE_INTERVAL_SECS = 20 * 60; // Update every 20 minutes
@@ -551,8 +551,8 @@ void drawHeaderOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
     Serial.print(rssi);
     Serial.println("dBm");
   }
-    String rssi_s = String(rssi) + " db";
-    display->drawString(115, 54, rssi_s);
+    //String rssi_s = String(rssi) + " db";
+    //display->drawString(115, 54, rssi_s);
 
     int bars;
     
