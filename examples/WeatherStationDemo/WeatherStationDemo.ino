@@ -1252,7 +1252,7 @@ void handleConfigure() {
   themeOptions.replace(">"+String(themeColor)+"<", " selected>"+String(themeColor)+"<");
   form.replace("%THEME_OPTIONS%", themeOptions);
 
-  String timeZoneOptions = FPTSR(TIME_ZONES);
+  String timeZoneOptions = FPSTR(TIME_ZONES);
   timeZoneOptions.replace(">"+String(TimeZoneLocation)+"<", " selected>"+String(TimeZoneLocation)+"<");
   form.replace("%TIME_ZONES%", timeZoneOptions);
   
