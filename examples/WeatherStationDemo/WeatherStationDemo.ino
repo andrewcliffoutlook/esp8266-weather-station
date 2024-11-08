@@ -1254,7 +1254,7 @@ void handleConfigure() {
 
   String timeZoneOptions = FPSTR(TIME_ZONES);
   timeZoneOptions.replace(">"+String(TimeZoneLocation)+"<", " selected>"+String(TimeZoneLocation)+"<");
-  form.replace("%TIME_ZONES%", timeZoneOptions);
+  form.replace("%TIME_ZONE_OPTIONS%", timeZoneOptions);
   
   form.replace("%UTCOFFSET%", String(UtcOffset));
   String isUseSecurityChecked = "";
