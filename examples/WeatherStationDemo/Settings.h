@@ -44,4 +44,4 @@ String OTA_Password = "";      // Set an OTA password here -- leave blank if you
 
 String themeColor = "light-green"; // this can be changed later in the web interface.
 String TimeZoneLocation = "Europe/London|GMT0BST,M3.5.0/1,M10.5.0";
-String TimeZoneValue = "GMT0BST,M3.5.0/1,M10.5.0"
+String TimeZoneValue = "GMT0BST,M3.5.0/1,M10.5.0";

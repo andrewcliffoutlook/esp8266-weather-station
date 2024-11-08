@@ -1252,7 +1252,7 @@ void handleConfigure() {
   form.replace("%THEME_OPTIONS%", themeOptions);
 
   String timeZoneOptions = FPTSR(TIME_ZONES);
-  timeZoneOptions.replace(">"+String(timeZoneLocation)+"<", " selected>"+String(timeZoneLocation)+"<");
+  timeZoneOptions.replace(">"+String(TimeZoneLocation)+"<", " selected>"+String(TimeZoneLocation)+"<");
   form.replace("%TIME_ZONES%", timeZoneOptions);
   
   form.replace("%UTCOFFSET%", String(UtcOffset));
@@ -1353,8 +1353,8 @@ void writeSettings() {
     Serial.println("Saving settings now...");
     f.println("refreshRate=" + String(minutesBetweenDataRefresh));
     f.println("themeColor=" + themeColor);
-    f.println("timeZoneLocation=" + timeZoneLocation);
-    f.println("timeZoneValue=" + timeZoneValue);
+    f.println("timeZoneLocation=" + TimeZoneLocation);
+    f.println("timeZoneValue=" + TimeZoneValue);
     f.println("IS_BASIC_AUTH=" + String(IS_BASIC_AUTH));
     f.println("www_username=" + String(www_username));
     f.println("www_password=" + String(www_password));
@@ -1386,14 +1386,14 @@ void readSettings() {
       Serial.println("minutesBetweenDataRefresh=" + String(minutesBetweenDataRefresh));
     }
     if (line.indexOf("timeZoneLocation=") >= 0) {
-      timeZoneLocation = line.substring(line.lastIndexOf("timeZoneLocation=") + 17);
-      timeZoneLocation.trim();
-      Serial.println("timeZoneLocation=" + timeZoneLocation);
+      TimeZoneLocation = line.substring(line.lastIndexOf("timeZoneLocation=") + 17);
+      TimeZoneLocation.trim();
+      Serial.println("timeZoneLocation=" + TimeZoneLocation);
     }
     if (line.indexOf("timeZoneValue=") >= 0) {
-      timeZoneValue = line.substring(line.lastIndexOf("timeZoneValue=") + 14);
-      timeZoneValue.trim();
-      Serial.println("timeZoneValue=" + timeZoneValue);
+      TimeZoneValue = line.substring(line.lastIndexOf("timeZoneValue=") + 14);
+      TimeZoneValue.trim();
+      Serial.println("timeZoneValue=" + TimeZoneValue);
     }
     if (line.indexOf("themeColor=") >= 0) {
       themeColor = line.substring(line.lastIndexOf("themeColor=") + 11);
