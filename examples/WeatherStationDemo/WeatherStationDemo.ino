@@ -1152,7 +1152,7 @@ void handleUpdateConfig() {
   themeColor = server.arg("theme");
   
   TimeZoneLocation = server.arg("timezone");
-  TimeZoneValue = TimeZoneValue.substring(TimeZoneLocation.find("|")+1);
+  TimeZoneValue = TimeZoneValue.substring(TimeZoneLocation.indexOf("|")+1);
   // ,TimeZoneLocation.length()-TimeZoneLocation.find("|"));
   String temp = server.arg("userid");
   temp.toCharArray(www_username, sizeof(temp));
