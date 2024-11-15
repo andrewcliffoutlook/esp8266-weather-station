@@ -1162,6 +1162,7 @@ void handleUpdateConfig() {
   temp.toCharArray(www_password, sizeof(temp));
   INVERT_DISPLAY = server.hasArg("invDisp");
   writeSettings();
+  setTimezone(TimeZoneValue);
   updateData(&display);
   redirectHome();
 }
