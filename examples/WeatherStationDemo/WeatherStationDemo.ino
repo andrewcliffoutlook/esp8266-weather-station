@@ -858,6 +858,8 @@ if (ENABLE_OTA) {
   Serial.println("");
 
   readSettings();
+
+  setTimezone(TimeZoneValue);
   
   updateData(&display);
 
@@ -1484,4 +1486,10 @@ String zeroPad(int value) {
     rtnValue = "0" + rtnValue;
   }
   return rtnValue;
+}
+
+void setTimezone(String timezone){
+  Serial.printf("  Setting Timezone to %s\n",timezone.c_str());
+  setenv("TZ",timezone.c_str(),1);  //  Now adjust the TZ.  Clock settings are adjusted to show the new local time
+  tzset();
 }
